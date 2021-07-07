@@ -24,7 +24,6 @@ postQuery = form => {
                 console.log(err);
             }
         })
-        //to prevent default form submit event
         return false;
     } catch (ex) {
         console.log(ex);
@@ -33,15 +32,15 @@ postQuery = form => {
 
 function sendAjaxForm( ajax_form, url) {
     $.ajax({
-        url: url, //url страницы (action_ajax_form.php)
-        type: "POST", //метод отправки
-        dataType: "html", //формат данных
-        data: $("#" + ajax_form).serialize(),  // Сеарилизуем объект
-        success: function (response) { //Данные отправлены успешно
+        url: url, 
+        type: "POST", 
+        dataType: "html",
+        data: $("#" + ajax_form).serialize(), 
+        success: function (response) { 
             result = $.parseJSON(response);
             $('#main').html(response);
         },
-        error: function (response) { // Данные не отправлены
+        error: function (response) {
             $('#main').html(response);
         }
     });
