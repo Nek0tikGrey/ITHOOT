@@ -1,11 +1,10 @@
 ﻿using DataLayer.Core;
-using DataLayer.Repositories;
 using Entity;
 using System.Threading.Tasks;
 
 namespace DataLayer
 {
-    public class EFUnitOfWork : IUnitOfWork
+    public class UnitOfWork : IUnitOfWork
     {
         public IRepository<ClientEntity> ClientRepository
         {
@@ -47,14 +46,18 @@ namespace DataLayer
         private IRepository<DeveloperEntity> _DeveloperRepository;
         private IRepository<PositionEntity> _PositionRepository;
         private IRepository<ProjectEntity> _ProjectRepository;
-        public EFUnitOfWork(AppContext context)
+        public UnitOfWork(
+            AppContext context,
+            IRepository<ClientEntity> clientRepository,
+            IRepository<DeveloperEntity> developerRepository,
+            IRepository<PositionEntity> positionRepository,
+            IRepository<ProjectEntity> projectRepository)
         {
             _context = context;
-
-            _ClientRepository = new ClientRepository(_context);
-            _DeveloperRepository = new DeveloperRepository(_context);
-            _PositionRepository = new PositionRepository(_context);
-            _ProjectRepository = new ProjectRepository(_context);
+            _ClientRepository = clientRepository;
+            _DeveloperRepository = developerRepository;
+            _PositionRepository = positionRepository;
+            _ProjectRepository = projectRepository;
 
         }
     }

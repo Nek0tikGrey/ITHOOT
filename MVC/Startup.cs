@@ -2,6 +2,8 @@ using BLL.Core;
 using BLL.Service;
 using DataLayer;
 using DataLayer.Core;
+using DataLayer.Repositories;
+using Entity;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -30,7 +32,13 @@ namespace MVC
         {
             services.AddDbContext<DataLayer.AppContext>(options =>
             options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-            services.AddScoped<IUnitOfWork, EFUnitOfWork>();
+
+            services.AddScoped<IRepository<DeveloperEntity>, DeveloperRepository>();
+            services.AddScoped<IRepository<ClientEntity>, ClientRepository>();
+            services.AddScoped<IRepository<PositionEntity>, PositionRepository>();
+            services.AddScoped<IRepository<ProjectEntity>, ProjectRepository>();
+
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             services.AddScoped<IClientService, ClientService>();
             services.AddScoped<IDeveloperService, DeveloperService>();
