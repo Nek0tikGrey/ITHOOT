@@ -14,7 +14,7 @@ namespace MVC.Controllers
     {
         public async Task<IActionResult> Index([FromServices] IDeveloperService developerService)
         {
-            var model = (await developerService.GetAllAsync()).Select(x => x.ToModel());
+            var model = await developerService.GetAllAsync();
             return PartialView(model.ToList());
         }
 
@@ -40,8 +40,8 @@ namespace MVC.Controllers
         [HttpGet]
         public async Task<IActionResult> Edit(Guid id,[FromServices] IDeveloperService developerService,[FromServices] IPositionService positionService)
         {
-            var model = (await developerService.GetAsync(id)).ToModel();
-            var positions = (await positionService.GetAllAsync()).Select(x => x.ToModel());
+            var model = await developerService.GetAsync(id);
+            var positions = await positionService.GetAllAsync();
             ViewData["Positions"] = new SelectList(positions, "Id", "Name",model.PositionId);
             return PartialView(model);
         }
@@ -55,7 +55,7 @@ namespace MVC.Controllers
             }
             else
             {
-                var positions = (await positionService.GetAllAsync()).Select(x => x.ToModel());
+                var positions = (await positionService.GetAllAsync()).Select(x => x);
                 ViewData["Position"] = new SelectList(positions, "Id", "Name", model.PositionId);
                 return PartialView(model);
             }
@@ -66,7 +66,7 @@ namespace MVC.Controllers
             if (id == Guid.Empty) return BadRequest();
             try
             {
-                DeveloperModel model = (await developerService.GetAsync(id)).ToModel();
+                DeveloperModel model = await developerService.GetAsync(id);
                 await developerService.RemoveAsync(model.ToDTO());
             }
             catch (Exception)

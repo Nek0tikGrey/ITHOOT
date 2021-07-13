@@ -2,9 +2,9 @@
 using DataLayer.Core;
 using Domain;
 using Mapper;
+using Model;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace BLL.Service
@@ -24,30 +24,31 @@ namespace BLL.Service
             await unitOfWork.SaveAsync();
         }
 
-        public async Task<IEnumerable<DeveloperDTO>> FindAsync(DeveloperDTO developerFilter)
+        public async Task<IEnumerable<DeveloperModel>> FindAsync(DeveloperDTO developerFilter)
         {
             var result = await unitOfWork.DeveloperRepository
                 .FindAsync(p =>
                 !string.IsNullOrEmpty(developerFilter.Name) ? p.Name.Contains(developerFilter.Name) : true
                 && (developerFilter.PositionId != Guid.Empty) ? p.PositionId == developerFilter.PositionId : true);
-            return result.Select(x => x.ToDTO());
+            return result.ToDTO().ToModel();
         }
 
-        public async Task<IEnumerable<DeveloperDTO>> FindDevelopersOnProjectAsync(Guid projectId)
+        public async Task<IEnumerable<DeveloperModel>> FindDevelopersOnProjectAsync(Guid projectId)
         {
-            var result = (await unitOfWork.ProjectRepository.GetAsync(projectId)).ToDTO();
-            return result.Developers;
+            var result = await unitOfWork.ProjectRepository.GetAsync(projectId);
+            return result.Developers.ToDTO().ToModel();
         }
 
-        public async Task<IEnumerable<DeveloperDTO>> GetAllAsync()
+        public async Task<IEnumerable<DeveloperModel>> GetAllAsync()
         {
             var result = await unitOfWork.DeveloperRepository.GetAllAsync();
-            return result.Select(x => x.ToDTO());
+            return result.ToDTO().ToModel();
         }
 
-        public async Task<DeveloperDTO> GetAsync(Guid id)
+        public async Task<DeveloperModel> GetAsync(Guid id)
         {
-            return (await unitOfWork.DeveloperRepository.GetAsync(id)).ToDTO();
+            var result=await unitOfWork.DeveloperRepository.GetAsync(id);
+            return result.ToDTO().ToModel();
         }
 
         public async Task RemoveAsync(DeveloperDTO developer)

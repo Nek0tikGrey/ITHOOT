@@ -2,9 +2,9 @@
 using DataLayer.Core;
 using Domain;
 using Mapper;
+using Model;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace BLL.Service
@@ -23,22 +23,23 @@ namespace BLL.Service
             await unitOfWork.ClientRepository.CreateAsync(client.ToEntity());
             await unitOfWork.SaveAsync();
         }
-        public async Task<IEnumerable<ClientDTO>> FindAsync(ClientDTO clientFilter)
+        public async Task<IEnumerable<ClientModel>> FindAsync(ClientDTO clientFilter)
         {
             var result = await unitOfWork.ClientRepository.FindAsync(p =>
                  !String.IsNullOrEmpty(clientFilter.Name) ? p.Name.Contains(clientFilter.Name) : true);
-            return result.Select(x => x.ToDTO());
+            return result.ToDTO().ToModel();
         }
 
-        public async Task<IEnumerable<ClientDTO>> GetAllAsync()
+        public async Task<IEnumerable<ClientModel>> GetAllAsync()
         {
             var result = await unitOfWork.ClientRepository.GetAllAsync();
-            return result.Select(x=>x.ToDTO());
+            return result.ToDTO().ToModel();
         }
 
-        public async Task<ClientDTO> GetAsync(Guid id)
+        public async Task<ClientModel> GetAsync(Guid id)
         {
-            return (await unitOfWork.ClientRepository.GetAsync(id)).ToDTO();
+            var result=await unitOfWork.ClientRepository.GetAsync(id);
+            return result.ToDTO().ToModel();
         }
 
         public async Task RemoveAsync(ClientDTO client)

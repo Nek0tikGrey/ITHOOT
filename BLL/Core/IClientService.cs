@@ -1,4 +1,5 @@
 ﻿using Domain;
+using Model;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -9,9 +10,9 @@ namespace BLL.Core
     {
         public Task AddAsync(ClientDTO client);
         public Task RemoveAsync(ClientDTO client);
-        public Task<IEnumerable<ClientDTO>> FindAsync(ClientDTO clientFilter);
+        public Task<IEnumerable<ClientModel>> FindAsync(ClientDTO clientFilter);
         public Task UpdateAsync(ClientDTO client);
-        public Task<IEnumerable<ClientDTO>> GetAllAsync();
-        public Task<ClientDTO> GetAsync(Guid id);
+        public Task<IEnumerable<ClientModel>> GetAllAsync();
+        public Task<ClientModel> GetAsync(Guid id);
     }
 }

@@ -29,7 +29,7 @@ namespace Mapper
                 result.Add(t.ToDTO());
             return result;
         }
-        public static IEnumerable<ProjectModel> ToDTO(this IEnumerable<ProjectDTO> projects)
+        public static IEnumerable<ProjectModel> ToModel(this IEnumerable<ProjectDTO> projects)
         {
             List<ProjectModel> result = new();
             foreach (var t in projects)

@@ -14,7 +14,7 @@ namespace MVC.Controllers
         public async Task<IActionResult> Index([FromServices] IClientService clientService)
         {
             var model = await clientService.GetAllAsync();
-            return PartialView(model.Select(x=>x.ToModel()).ToList());
+            return PartialView(model.ToList());
         }
 
         [HttpGet]
@@ -31,7 +31,7 @@ namespace MVC.Controllers
         [HttpGet]
         public async Task<IActionResult> Edit(Guid id, [FromServices] IClientService clientService)
         {
-            var model = (await clientService.GetAsync(id)).ToModel();
+            var model = await clientService.GetAsync(id);
             return PartialView(model);
         }
 
@@ -49,7 +49,7 @@ namespace MVC.Controllers
         [HttpPost]
         public async Task<IActionResult> Delete(Guid id, [FromServices] IClientService clientService)
         {
-            var model = (await clientService.GetAsync(id)).ToModel();
+            var model = await clientService.GetAsync(id);
             if (model == null) 
                 return NotFound();
 

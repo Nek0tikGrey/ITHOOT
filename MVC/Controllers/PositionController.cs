@@ -18,7 +18,7 @@ namespace MVC.Controllers
         }
         public async Task<IActionResult> Index()
         {
-            var model = (await positionService.GetAllAsync()).Select(x => x.ToModel());
+            var model =await positionService.GetAllAsync();
             return PartialView(model.ToList());
         }
         [HttpGet]
@@ -36,7 +36,7 @@ namespace MVC.Controllers
         [HttpGet]
         public async Task<IActionResult> Edit(Guid id)
         {
-            var model = (await positionService.GetAsync(id)).ToModel();
+            var model = await positionService.GetAsync(id);
             return PartialView(model);
         }
         [HttpPost]
@@ -55,7 +55,7 @@ namespace MVC.Controllers
             if (id == Guid.Empty) return BadRequest();
             try
             {
-                PositionModel model = (await positionService.GetAsync(id)).ToModel();
+                PositionModel model = await positionService.GetAsync(id);
                 await positionService.RemoveAsync(model.ToDTO());
             }
             catch (Exception)

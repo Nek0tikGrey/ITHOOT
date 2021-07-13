@@ -2,6 +2,7 @@
 using DataLayer.Core;
 using Domain;
 using Mapper;
+using Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,29 +25,30 @@ namespace BLL.Service
             await unitOfWork.SaveAsync();
         }
 
-        public async Task<IEnumerable<ProjectDTO>> FindAsync(ProjectDTO projectFilter)
+        public async Task<IEnumerable<ProjectModel>> FindAsync(ProjectDTO projectFilter)
         {
             var result = await unitOfWork.ProjectRepository.FindAsync(p =>
                  !string.IsNullOrEmpty(projectFilter.Name) ? p.Name.Contains(projectFilter.Name) : true
                  && (projectFilter.ClientId != Guid.Empty) ? p.ClientId == projectFilter.ClientId:true);
-            return result.Select(x => x.ToDTO());
+            return result.ToDTO().ToModel();
         }
 
-        public async Task<IEnumerable<ProjectDTO>> FindDeveloperProjectsAsync(Guid developerId)
+        public async Task<IEnumerable<ProjectModel>> FindDeveloperProjectsAsync(Guid developerId)
         {
-            var result = (await unitOfWork.DeveloperRepository.GetAsync(developerId)).ToDTO();
-            return result.Projects;
+            var result = await unitOfWork.DeveloperRepository.GetAsync(developerId);
+            return result.Projects.ToDTO().ToModel();
         }
 
-        public async Task<IEnumerable<ProjectDTO>> GetAllAsync()
+        public async Task<IEnumerable<ProjectModel>> GetAllAsync()
         {
             var result = await unitOfWork.ProjectRepository.GetAllAsync();
-            return result.Select(x => x.ToDTO());
+            return result.ToDTO().ToModel();
         }
 
-        public async Task<ProjectDTO> GetAsync(Guid id)
+        public async Task<ProjectModel> GetAsync(Guid id)
         {
-            return (await unitOfWork.ProjectRepository.GetAsync(id)).ToDTO();
+            var result = await unitOfWork.ProjectRepository.GetAsync(id);
+            return result.ToDTO().ToModel();
         }
 
         public async Task RemoveAsync(ProjectDTO project)

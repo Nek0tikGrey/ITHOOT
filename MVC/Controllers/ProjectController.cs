@@ -21,19 +21,19 @@ namespace MVC.Controllers
 
         public async Task<IActionResult> Index()
         {
-            var model = (await projectService.GetAllAsync()).Select(x=>x.ToModel());
+            var model = await projectService.GetAllAsync();
             return PartialView(model.ToList());
         }
         [HttpGet]
         public async Task<IActionResult> Detalis(Guid id)
         {
-            var model = (await projectService.GetAsync(id)).ToModel();
+            var model = await projectService.GetAsync(id);
             return PartialView(model);
         }
         [HttpGet]
         public async Task<IActionResult> Create([FromServices] IClientService clientService)
         {
-            var clients = (await clientService.GetAllAsync()).Select(x => x.ToModel());
+            var clients = await clientService.GetAllAsync();
             ViewData["Clients"] = new SelectList(clients,"Id","Name");
             return PartialView();
         }
@@ -45,7 +45,7 @@ namespace MVC.Controllers
                 await projectService.AddAsync(model.ToDTO());
                 return RedirectToAction("Index");
             }
-            var clients = (await clientService.GetAllAsync()).Select(x => x.ToModel());
+            var clients = await clientService.GetAllAsync();
             ViewData["Clients"] = new SelectList(clients, "Id", "Name",model.ClientId);
             return PartialView(model);
         }
@@ -55,12 +55,12 @@ namespace MVC.Controllers
             if (Id == Guid.Empty) 
                 return BadRequest();
 
-            var model = (await projectService.GetAsync(Id)).ToModel();
+            var model = await projectService.GetAsync(Id);
 
             if (model == null) 
                 return NotFound();
 
-            var clients = (await clientService.GetAllAsync()).Select(x => x.ToModel());
+            var clients = await clientService.GetAllAsync();
             ViewData["Clients"] = new SelectList(clients, "Id", "Name",model.ClientId);
             return PartialView(model);
         }
@@ -72,7 +72,7 @@ namespace MVC.Controllers
                 await projectService.UpdateAsync(model.ToDTO());
                 return RedirectToAction("Index");
             }
-            var clients = (await clientService.GetAllAsync()).Select(x => x.ToModel());
+            var clients = await clientService.GetAllAsync();
             ViewData["Clients"] = new SelectList(clients, "Id", "Name", model.ClientId);
             return PartialView(model);
         }
@@ -82,7 +82,7 @@ namespace MVC.Controllers
             if (id == Guid.Empty) return BadRequest();
             try
             {
-                ProjectModel model = (await projectService.GetAsync(id)).ToModel();
+                ProjectModel model = await projectService.GetAsync(id);
                 await projectService.RemoveAsync(model.ToDTO());
             }
             catch (Exception)

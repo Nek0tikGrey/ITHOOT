@@ -25,14 +25,14 @@ namespace MVC.Controllers
         {
             if (projectId == Guid.Empty) 
                 return BadRequest();
-            var entry = (await projectService.GetAsync(projectId)).ToModel();
+            var entry = await projectService.GetAsync(projectId);
             if (entry == null)
                 return NotFound();
             DeveloperOnProjectViewModel model = new DeveloperOnProjectViewModel { ProjectId = entry.Id };
-            var projects = (await projectService.GetAllAsync()).Select(x => x.ToModel());
+            var projects = await projectService.GetAllAsync();
 
             ViewData["Projects"] = new SelectList(projects, "Id", "Name", entry.Id);
-            var developers = (await developerService.GetAllAsync()).Select(x => x.ToModel());
+            var developers = await developerService.GetAllAsync();
             ViewData["Developers"] = new SelectList(developers, "Id", "Name");
             return PartialView(model);
         }
@@ -45,8 +45,8 @@ namespace MVC.Controllers
             }
             if (ModelState.IsValid)
             {
-                var entryProject = (await projectService.GetAsync(model.ProjectId)).ToModel();
-                var entryDeveloper = (await developerService.GetAsync(model.DeveloperId)).ToModel();
+                var entryProject = await projectService.GetAsync(model.ProjectId);
+                var entryDeveloper = await developerService.GetAsync(model.DeveloperId);
                 if (entryDeveloper == null || entryProject==null)
                     return NotFound();
 
@@ -56,16 +56,16 @@ namespace MVC.Controllers
 
                 return RedirectToAction("Detalis", "Project", new { id = model.ProjectId });
             }
-            var projects = (await projectService.GetAllAsync()).Select(x => x.ToModel());
+            var projects = await projectService.GetAllAsync();
             ViewData["Projects"] = new SelectList(projects, "Id", "Name", model.ProjectId);
-            var developers = (await developerService.GetAllAsync()).Select(x => x.ToModel());
+            var developers = await developerService.GetAllAsync();
             ViewData["Developers"] = new SelectList(developers, "Id", "Name",model.DeveloperId);
             return PartialView(model);
         }
         [HttpPost]
         public async Task<IActionResult> RemoveDeveloperOnProject(Guid projectId,Guid developerId, [FromServices] IDeveloperService developerService)
         {
-            var entryProject = (await projectService.GetAsync(projectId)).ToModel();
+            var entryProject = await projectService.GetAsync(projectId);
             var entryDeveloper = entryProject.Developers.First(p => p.Id == developerId);
             if (entryDeveloper == null || entryProject == null)
                 return NotFound();

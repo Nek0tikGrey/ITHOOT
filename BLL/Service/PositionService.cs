@@ -2,10 +2,9 @@
 using DataLayer.Core;
 using Domain;
 using Mapper;
+using Model;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace BLL.Service
@@ -25,24 +24,25 @@ namespace BLL.Service
             await unitOfWork.SaveAsync();
         }
 
-        public async Task<IEnumerable<PositionDTO>> FindAsync(PositionDTO positionFilter)
+        public async Task<IEnumerable<PositionModel>> FindAsync(PositionDTO positionFilter)
         {
             var result = await unitOfWork.PositionRepository.
                 FindAsync(p => 
                 !string.IsNullOrEmpty(positionFilter.Name) ? p.Name.Contains(positionFilter.Name) : true);
 
-            return result.Select(x => x.ToDTO());
+            return result.ToDTO().ToModel();
         }
 
-        public async Task<IEnumerable<PositionDTO>> GetAllAsync()
+        public async Task<IEnumerable<PositionModel>> GetAllAsync()
         {
             var result = await unitOfWork.PositionRepository.GetAllAsync();
-            return result.Select(x => x.ToDTO());
+            return result.ToDTO().ToModel();
         }
 
-        public async Task<PositionDTO> GetAsync(Guid id)
+        public async Task<PositionModel> GetAsync(Guid id)
         {
-            return (await unitOfWork.PositionRepository.GetAsync(id)).ToDTO();
+            var result = await unitOfWork.PositionRepository.GetAsync(id);
+            return result.ToDTO().ToModel();
         }
 
         public async Task RemoveAsync(PositionDTO position)
