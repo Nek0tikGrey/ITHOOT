@@ -55,19 +55,12 @@ namespace DataLayer.Repositories
 
             var added = developers?.Except(entity.Developers);
             var removed = entity.Developers?.Except(developers);
-            try
-            {
-                foreach (var t in added)
-                    entity.Developers.Add(t);
-                foreach (var t in removed)
-                    entity.Developers.Remove(t);
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine("***********************");
-
-                Debug.WriteLine(ex.Message);
-            }
+            
+            foreach (var t in added)
+                entity.Developers.Add(t);
+            foreach (var t in removed)
+                entity.Developers.Remove(t);
+            
             entity.ClientId = item.ClientId;
             entity.Client = item.Client;
             entity.Name = item.Name;

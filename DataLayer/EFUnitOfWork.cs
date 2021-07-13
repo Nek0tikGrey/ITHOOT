@@ -1,7 +1,6 @@
 ﻿using DataLayer.Core;
 using DataLayer.Repositories;
 using Entity;
-using System;
 using System.Threading.Tasks;
 
 namespace DataLayer
@@ -51,6 +50,7 @@ namespace DataLayer
         public EFUnitOfWork(AppContext context)
         {
             _context = context;
+
             _ClientRepository = new ClientRepository(_context);
             _DeveloperRepository = new DeveloperRepository(_context);
             _PositionRepository = new PositionRepository(_context);

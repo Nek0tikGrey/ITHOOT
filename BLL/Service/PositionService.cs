@@ -30,6 +30,7 @@ namespace BLL.Service
             var result = await unitOfWork.PositionRepository.
                 FindAsync(p => 
                 !string.IsNullOrEmpty(positionFilter.Name) ? p.Name.Contains(positionFilter.Name) : true);
+
             return result.Select(x => x.ToDTO());
         }
 

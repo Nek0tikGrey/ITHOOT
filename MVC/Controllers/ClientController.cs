@@ -16,8 +16,10 @@ namespace MVC.Controllers
             var model = await clientService.GetAllAsync();
             return PartialView(model.Select(x=>x.ToModel()).ToList());
         }
+
         [HttpGet]
         public IActionResult Create() => PartialView();
+
         [HttpPost]
         public async Task<IActionResult> Create(ClientModel model,[FromServices] IClientService clientService)
         {
@@ -25,12 +27,14 @@ namespace MVC.Controllers
             await clientService.AddAsync(model.ToDTO());
             return RedirectToAction("Index");
         }
+
         [HttpGet]
         public async Task<IActionResult> Edit(Guid id, [FromServices] IClientService clientService)
         {
             var model = (await clientService.GetAsync(id)).ToModel();
             return PartialView(model);
         }
+
         [HttpPost]
         public async Task<IActionResult> Edit(ClientModel model, [FromServices] IClientService clientService)
         {
@@ -41,13 +45,16 @@ namespace MVC.Controllers
             }
             return PartialView(model);
         }
+
         [HttpPost]
         public async Task<IActionResult> Delete(Guid id, [FromServices] IClientService clientService)
         {
             var model = (await clientService.GetAsync(id)).ToModel();
             if (model == null) 
                 return NotFound();
+
             await clientService.RemoveAsync(model.ToDTO());
+
             return RedirectToAction("Index");
         }
     }

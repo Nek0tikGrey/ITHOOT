@@ -1,12 +1,40 @@
 ﻿using Domain;
 using Entity;
 using Model;
-using System.Linq;
+using System.Collections.Generic;
 
 namespace Mapper
 {
     public static class DeveloperMapper
     {
+        public static IEnumerable<DeveloperDTO> ToDTO(this IEnumerable<DeveloperModel> developers)
+        {
+            List<DeveloperDTO> result = new();
+            foreach (var t in developers)
+                result.Add(t.ToDTO());
+            return result;
+        }
+        public static IEnumerable<DeveloperEntity> ToEntity(this IEnumerable<DeveloperDTO> developers)
+        {
+            List<DeveloperEntity> result = new();
+            foreach (var t in developers)
+                result.Add(t.ToEntity());
+            return result;
+        }
+        public static IEnumerable<DeveloperDTO> ToDTO(this IEnumerable<DeveloperEntity> developers)
+        {
+            List<DeveloperDTO> result = new List<DeveloperDTO>();
+            foreach (var t in developers)
+                result.Add(t.ToDTO());
+            return result;
+        }
+        public static IEnumerable<DeveloperModel> ToModel(this IEnumerable<DeveloperDTO> developers)
+        {
+            List<DeveloperModel> result = new();
+            foreach (var t in developers)
+                result.Add(t.ToModel());
+            return result;
+        }
         public static DeveloperEntity ToEntity(this DeveloperDTO developer)
         {
             developer ??= new DeveloperDTO();
