@@ -11,6 +11,9 @@ namespace Model
         [StringLength(50)]
         [Required]
         public string Name { get; set; }
+        [Display(Name ="Бюджет")]
+        [Required]
+        public int Price { get; set; }
         [Required]
         [Display(Name="Клієнт")]
         public Guid ClientId { get; set; }

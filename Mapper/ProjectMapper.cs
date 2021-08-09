@@ -45,7 +45,8 @@ namespace Mapper
                 Client = project.Client?.ToEntity(),
                 ClientId = project.ClientId,
                 Developers = project.Developers?.ToEntity().ToList(),
-                Name = project.Name
+                Name = project.Name,
+                Price = project.Price
             };
         }
         public static ProjectDTO ToDTO(this ProjectEntity project)
@@ -57,7 +58,8 @@ namespace Mapper
                 Client = project.Client?.ToDTO(),
                 ClientId = project.ClientId,
                 Developers = project.Developers?.ToDTO().ToList(),
-                Name = project.Name
+                Name = project.Name,
+                Price = project.Price
             };
         }
         public static ProjectDTO ToDTO(this ProjectModel project)
@@ -69,7 +71,8 @@ namespace Mapper
                 Client = project.Client?.ToDTO(),
                 ClientId = project.ClientId,
                 Developers = project.Developers?.ToDTO().ToList(),
-                Name = project.Name
+                Name = project.Name,
+                Price = project.Price
             };
         }
         public static ProjectModel ToModel(this ProjectDTO project)
@@ -81,7 +84,8 @@ namespace Mapper
                 Client = project.Client?.ToModel(),
                 ClientId = project.ClientId,
                 Developers = project.Developers?.ToModel().ToList(),
-                Name = project.Name
+                Name = project.Name,
+                Price = project.Price
             };
         }
 

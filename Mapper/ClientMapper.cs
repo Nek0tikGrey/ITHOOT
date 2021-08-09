@@ -41,7 +41,9 @@ namespace Mapper
             return new ClientEntity
             {
                 Id = client.Id,
-                Name = client.Name
+                Name = client.Name,
+                Age = client.Age,
+                Surname = client.Surname
             };
         }
         public static ClientDTO ToDTO(this ClientEntity client)
@@ -50,7 +52,9 @@ namespace Mapper
             return new ClientDTO
             {
                 Id = client.Id,
-                Name = client.Name
+                Name = client.Name,
+                Age = client.Age,
+                Surname = client.Surname
             };
         }
         public static ClientDTO ToDTO(this ClientModel client)
@@ -59,7 +63,9 @@ namespace Mapper
             return new ClientDTO
             {
                 Id = client.Id,
-                Name = client.Name
+                Name = client.Name,
+                Age = client.Age,
+                Surname = client.Surname
             };
         }
         public static ClientModel ToModel(this ClientDTO client)
@@ -68,7 +74,9 @@ namespace Mapper
             return new ClientModel
             {
                 Id = client.Id,
-                Name = client.Name
+                Name = client.Name,
+                Age = client.Age,
+                Surname = client.Surname
             };
         }
         

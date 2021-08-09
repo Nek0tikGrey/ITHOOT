@@ -7,10 +7,14 @@ namespace Model
 {
     public class DeveloperModel:BaseModel
     {
-        [Display(Name = "ПІБ")]
+        [Display(Name = "Ім'я")]
         [StringLength(50)]
         [Required]
         public string Name { get; set; }
+        [Display(Name = "Прізвище")]
+        [StringLength(50)]
+        [Required]
+        public string Surname { get; set; }
         [Display(Name="Проекти")]
         public IList<ProjectModel> Projects { get; set; }
         [Required]

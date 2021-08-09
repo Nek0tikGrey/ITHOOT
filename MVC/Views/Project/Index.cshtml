@@ -8,17 +8,18 @@
 {
     <div class="d-flex flex-column bg-light m-2 justify-content-around">
         <div class="d-flex justify-content-between">
-            <div class="d-flex">
-                <p class="p-1">@Html.DisplayNameFor(model => model.Id)</p>
-                <p class="p-1">@Html.DisplayFor(model => item.Id)</p>
-            </div>
+
             <div class="d-flex">
                 <p class="p-1">@Html.DisplayNameFor(model => model.Name)</p>
                 <p class="p-1">@Html.DisplayFor(model => item.Name)</p>
             </div>
             <div class="d-flex">
+                <p class="p-1">@Html.DisplayNameFor(model => model.Price)</p>
+                <p class="p-1">@Html.DisplayFor(model => item.Price)</p>
+            </div>
+            <div class="d-flex">
                 <p class="p-1">@Html.DisplayNameFor(model => model.Client)</p>
-                <p class="p-1">@Html.DisplayFor(model => item.Client.Name)</p>
+                <p class="p-1">@Html.DisplayFor(model => item.Client.Name) @Html.DisplayFor(model => item.Client.Surname)</p>
             </div>
         </div>
         <div class="d-flex">

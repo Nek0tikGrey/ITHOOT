@@ -43,7 +43,8 @@ namespace Mapper
                 Id = developer.Id,
                 Name = developer.Name,
                 PositionId = developer.PositionId,
-                Position = developer.Position?.ToEntity()
+                Position = developer.Position?.ToEntity(),
+                Surname=developer.Surname                  
             };
         }
         public static DeveloperDTO ToDTO(this DeveloperEntity developer)
@@ -54,7 +55,8 @@ namespace Mapper
                 Id = developer.Id,
                 Name = developer.Name,
                 PositionId = developer.PositionId,
-                Position = developer.Position?.ToDTO()
+                Position = developer.Position?.ToDTO(),
+                Surname = developer.Surname
             };
         }
         public static DeveloperDTO ToDTO(this DeveloperModel developer)
@@ -65,7 +67,8 @@ namespace Mapper
                 Id = developer.Id,
                 Name = developer.Name,
                 PositionId = developer.PositionId,
-                Position = developer.Position?.ToDTO()
+                Position = developer.Position?.ToDTO(),
+                Surname = developer.Surname
             };
         }
         public static DeveloperModel ToModel(this DeveloperDTO developer)
@@ -76,7 +79,8 @@ namespace Mapper
                 Id = developer.Id,
                 Name = developer.Name,
                 PositionId = developer.PositionId,
-                Position = developer.Position?.ToModel()
+                Position = developer.Position?.ToModel(),
+                Surname = developer.Surname
             };
         }
     }

@@ -11,7 +11,7 @@ namespace DataLayer
         public DbSet<ProjectEntity> Projects { get; set; }
         public AppContext(DbContextOptions options):base(options)
         {
-            Database.EnsureCreated();
+            
         }
     }
 }
